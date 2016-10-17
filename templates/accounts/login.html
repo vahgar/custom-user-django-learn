@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>
+      Login Page
+    </title>
+  </head>
+  <body>
+    <p>Hey, {{ user.email }}</p>
+    {% for i in q_set_list %}
+        <p>{{ i.student_id }} is of {{ i.school.school_name }}</p>
+    {% endfor %}
+    <body>
+</html>
