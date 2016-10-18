@@ -65,3 +65,8 @@ def login(request):
 def check_work(request):
     x = request.user
     return HttpResponse(x)
+
+@login_required
+def logout(request):
+    django_logout(request)
+    return redirect('index_page')
