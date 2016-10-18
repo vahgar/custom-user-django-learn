@@ -26,7 +26,7 @@ SECRET_KEY = 'i@$#5bsadf7l$^lc!wp_s8_x7jux=u8#*qpo)8rl=rjrud=y!g'
 DEBUG = True
 
 AUTH_USER_MODEL = 'accounts.BaseUSER'
-AUTHENTICATION_BACKENDS = ['accounts.backends.BackendForAdmin', 'accounts.backends.BackendForPinteam']
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend','accounts.backends.BackendForAdmin', 'accounts.backends.BackendForPinteam']
 
 
 # Application definition

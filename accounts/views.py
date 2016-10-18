@@ -38,12 +38,12 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    # school = user.school
-                    # q_set = StudentUser.objects.filter(school=school)
-                    # q_set_list = []
-                    # for i in q_set:
-                    #     q_set_list.append(i)
-                    # context = { 'user':user, 'q_set_list':q_set_list }
+                    school = user.school
+                    q_set = StudentUser.objects.filter(school=school)
+                    q_set_list = []
+                    for i in q_set:
+                        q_set_list.append(i)
+                    context = { 'user':user, 'q_set_list':q_set_list }
                     return render(request,'accounts/login.html')
                 else:
                     return HttpResponse("Not Active")
@@ -51,7 +51,17 @@ def login(request):
                 return HttpResponse("None")
         else:
             return HttpResponse("Form is not valid")
+    elif(request.user.is_authenticated()):
+        user = request.user
+        print(user)
+        context = { 'user':user }
+        return render(request,'accounts/login.html',context)
     else:
         form = AuthenticationForm()
         context = {'form':form}
         return render(request,'accounts/index.html',context)
+
+@login_required
+def check_work(request):
+    x = request.user
+    return HttpResponse(x)
