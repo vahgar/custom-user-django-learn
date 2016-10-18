@@ -3,7 +3,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.backends import ModelBackend
 
 
-class BackendForAdmin(object):
+class BackendForAdmin(ModelBackend):
     print("We are at Backend for admin")
     def authenticate(self, username=None, password=None):
         try:
@@ -22,11 +22,11 @@ class BackendForAdmin(object):
         except SchoolAdmin.DoesNotExist:
             return None
 
-class BackendForPinteam(object):
+class BackendForPinteam(ModelBackend):
     print("We are at Backend for Pinteam")
     def authenticate(self, username=None, password=None):
         try:
-            member = Pinteam.objects.get(email=username)
+            member = BaseUSER.objects.get(email=username)
         except SchoolAdmin.DoesNotExist:
             return None
 
@@ -37,6 +37,6 @@ class BackendForPinteam(object):
 
     def get_user(self, email):
         try:
-            return Pinteam.objects.get(email=email)
-        except Pinteam.DoesNotExist:
+            return BaseUSER.objects.get(email=email)
+        except BaseUSER.DoesNotExist:
             return None

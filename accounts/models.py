@@ -25,6 +25,13 @@ class NewUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
 
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_superuser', True)
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        return self._create_user(email, password, **extra_fields)
+
+
 class SuperManager(BaseUserManager):
 
 
@@ -57,17 +64,23 @@ class SuperManager(BaseUserManager):
 
 # USER STARTS HERE
 
-class BaseUSER(AbstractBaseUser):
+class BaseUSER(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=True)
 
+    objects = NewUserManager()
+
     USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        return self.email
+
+
+
 
 class StudentUser(BaseUSER):
 
@@ -86,6 +99,8 @@ class StudentUser(BaseUSER):
 
     USERNAME_FIELD = 'student_id'
 
+    def __str__(self):
+        return self.student_id
 
 class SchoolAdmin(BaseUSER):
 
@@ -94,6 +109,10 @@ class SchoolAdmin(BaseUSER):
     objects = NewUserManager()
 
     USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        x = self.school.school_name + " " + self.email
+        return x
 
 class Pinteam(BaseUSER):
 
@@ -117,6 +136,10 @@ class Pinteam(BaseUSER):
 
     def has_module_perms(self, app_label):
         return self.is_admin
+
+    def __str__(self):
+        return self.first_name
+
 
     objects = SuperManager()
 

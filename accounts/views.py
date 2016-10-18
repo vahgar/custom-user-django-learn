@@ -11,15 +11,20 @@ from django.template import RequestContext
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from accounts.models import StudentUser
 from .forms import AuthenticationForm, RegistrationForm
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
-def index_page(request):
 
+def index_page(request):
+    print(request.session)
     if(request.user.is_authenticated()):
         user = request.user
+        print(user)
         context = { 'user':user }
         return render(request,'accounts/login.html',context)
     else:
+        print("No")
         form = AuthenticationForm()
         context = {'form':form}
         return render(request,'accounts/index.html',context)
@@ -33,13 +38,13 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    school = user.school
-                    q_set = StudentUser.objects.filter(school=school)
-                    q_set_list = []
-                    for i in q_set:
-                        q_set_list.append(i)
-                    context = { 'user':user, 'q_set_list':q_set_list }
-                    return render(request,'accounts/login.html',context)
+                    # school = user.school
+                    # q_set = StudentUser.objects.filter(school=school)
+                    # q_set_list = []
+                    # for i in q_set:
+                    #     q_set_list.append(i)
+                    # context = { 'user':user, 'q_set_list':q_set_list }
+                    return render(request,'accounts/login.html')
                 else:
                     return HttpResponse("Not Active")
             else:
