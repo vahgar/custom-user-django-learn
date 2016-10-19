@@ -1,4 +1,4 @@
-from accounts.models import BaseUSER, SchoolAdmin, Pinteam
+from accounts.models import BaseUSER, SchoolAdmin, Pinteam, StudentUser
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.backends import ModelBackend
 
@@ -26,7 +26,27 @@ class BackendForPinteam(ModelBackend):
     print("We are at Backend for Pinteam")
     def authenticate(self, username=None, password=None):
         try:
-            member = BaseUSER.objects.get(email=username)
+            member = Pinteam.objects.get(email=username)
+        except Pinteam.DoesNotExist:
+            return None
+
+        if member.check_password(password):
+            return member
+        else:
+            return None
+
+    def get_user(self, email):
+        try:
+            return Pinteam.objects.get(email=email)
+        except Pinteam.DoesNotExist:
+            return None
+
+
+class BackendForStudents(ModelBackend):
+    print("We are at Backend for Pinteam")
+    def authenticate(self, username=None, password=None):
+        try:
+            member = StudentUser.objects.get(email=username)
         except SchoolAdmin.DoesNotExist:
             return None
 
@@ -37,6 +57,6 @@ class BackendForPinteam(ModelBackend):
 
     def get_user(self, email):
         try:
-            return BaseUSER.objects.get(email=email)
-        except BaseUSER.DoesNotExist:
+            return Pinteam.objects.get(email=email)
+        except Pinteam.DoesNotExist:
             return None
