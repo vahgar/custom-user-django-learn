@@ -57,9 +57,12 @@ def login(request):
         else:
             return HttpResponse("Form is not valid")
     elif(request.user.is_authenticated()):
-        user = request.user
-        print(user)
-        context = { 'user':user }
+        school = check.school
+        q_set = StudentUser.objects.filter(school=school)
+        q_set_list = []
+        for i in q_set:
+            q_set_list.append(i)
+        context = { 'user':user,'q_set_list':q_set_list}
         return render(request,'accounts/login.html',context)
     else:
         form = AuthenticationForm()
