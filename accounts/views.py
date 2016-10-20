@@ -17,7 +17,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index_page(request):
-    print(request.session)
     if(request.user.is_authenticated()):
         user = request.user
         print(user)
@@ -57,6 +56,9 @@ def login(request):
         else:
             return HttpResponse("Form is not valid")
     elif(request.user.is_authenticated()):
+        user = request.user
+        email = user.email
+        check = SchoolAdmin.objects.get(email=email)
         school = check.school
         q_set = StudentUser.objects.filter(school=school)
         q_set_list = []
