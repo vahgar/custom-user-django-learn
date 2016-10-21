@@ -42,3 +42,14 @@ class AuthenticationForm(forms.Form):
 
     class Meta:
         fields = ['email', 'password']
+
+
+class AuthenticationFormPinteam(forms.Form):
+    """
+    Login form
+    """
+    email = forms.EmailField()
+    password = forms.CharField(widget = forms.PasswordInput)
+
+    class Meta:
+        fields = ['email', 'password']
