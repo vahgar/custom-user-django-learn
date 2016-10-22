@@ -98,6 +98,8 @@ class StudentUser(BaseUSER):
     standard = models.CharField(max_length=2,blank=True, null=True)
     # bus_transport = models.ForeignKey(Bus,blank=True,null=True)
 
+    objects = NewUserManager()
+
     USERNAME_FIELD = 'student_id'
 
     def __str__(self):

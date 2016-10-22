@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response, redirect, render, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from accounts.models import StudentUser, SchoolAdmin
-from .forms import AuthenticationForm, RegistrationForm
+from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinteam
 from django.contrib.auth.decorators import login_required
 
 
@@ -80,3 +80,17 @@ def check_work(request):
 def logout(request):
     django_logout(request)
     return redirect('index_page')
+
+
+def pinteam_index(request):
+    if(request.user.is_authenticated()):
+        pass
+        # user = request.user
+        # print(user)
+        # context = { 'user':user }
+        # return render(request,'accounts/login.html',context)
+    else:
+        print("No")
+        form = AuthenticationFormPinteam()
+        context = {'form':form}
+        return render(request,'accounts/pinteam_index.html',context)
