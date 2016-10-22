@@ -2,7 +2,7 @@ Welcome to the custom-user-django-learn wiki!
 
 This is in order to explain "How to use Custom Users in django".
 
-First of all in your models.py file create a Custom User By extending django's AbstractBaseUser, We are using going to follow AbstractBaseUser in this one as I do not want to include username field in my model.
+First of all in your models.py file create a Custom User By extending django's AbstractBaseUser, We are going to follow AbstractBaseUser in this one as I do not want to include username field in my model.
 
 For Better understanding read AbstractBaseUser model from link below. (https://github.com/django/django/blob/master/django/contrib/auth/base_user.py)
 
