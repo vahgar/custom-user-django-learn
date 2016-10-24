@@ -9,7 +9,8 @@
 from django.shortcuts import render_to_response, redirect, render, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
-from accounts.models import StudentUser, SchoolAdmin
+from accounts.models import StudentUser, SchoolAdmin, Pinteam
+from School.models import School
 from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinteam
 from django.contrib.auth.decorators import login_required
 
@@ -21,12 +22,12 @@ def index_page(request):
         user = request.user
         print(user)
         context = { 'user':user }
-        return render(request,'accounts/login.html',context)
+        return render(request,'accounts/SchoolAdmin/login.html',context)
     else:
         print("No")
         form = AuthenticationForm()
         context = {'form':form}
-        return render(request,'accounts/index.html',context)
+        return render(request,'accounts/SchoolAdmin/index.html',context)
 
 
 def login(request):
@@ -48,7 +49,7 @@ def login(request):
                     for i in q_set:
                         q_set_list.append(i)
                     context = { 'user':user,'q_set_list':q_set_list}
-                    return render(request,'accounts/login.html',context)
+                    return render(request,'accounts/SchoolAdmin/login.html',context)
                 else:
                     return HttpResponse("Not Active")
             else:
@@ -65,11 +66,11 @@ def login(request):
         for i in q_set:
             q_set_list.append(i)
         context = { 'user':user,'q_set_list':q_set_list}
-        return render(request,'accounts/login.html',context)
+        return render(request,'accounts/SchoolAdmin/login.html',context)
     else:
         form = AuthenticationForm()
         context = {'form':form}
-        return render(request,'accounts/index.html',context)
+        return render(request,'accounts/SchoolAdmin/index.html',context)
 
 @login_required
 def check_work(request):
@@ -90,7 +91,47 @@ def pinteam_index(request):
         # context = { 'user':user }
         # return render(request,'accounts/login.html',context)
     else:
-        print("No")
+        print("Pin index")
         form = AuthenticationFormPinteam()
         context = {'form':form}
-        return render(request,'accounts/pinteam_index.html',context)
+        return render(request,'accounts/Pinteam/index.html',context)
+
+
+def login_pinteam(request):
+    if request.method == 'POST':
+        form = AuthenticationFormPinteam(request.POST)
+        print("At pin view")
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                check = Pinteam.objects.get(email=email)
+            except Pinteam.DoesNotExist:
+                return HttpResponse("User Does Not Exists")
+            user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
+            if user is not None:
+                if user.is_active:
+                    django_login(request,user)
+                    schools = School.objects.all()
+                    school_list = []
+                    for i in schools:
+                        school_list.append(i)
+                    context = {'user':user,'school_list':school_list}
+                    return render(request,'accounts/Pinteam/login.html',context)
+                else:
+                    return HttpResponse("Not Active")
+            else:
+                return HttpResponse("User Check Credentials")
+        else:
+            return HttpResponse("Form Not Valid")
+    elif(request.user.is_authenticated()):
+        user = request.user
+        schools = School.objects.all()
+        school_list = []
+        for i in schools:
+            school_list.append(i)
+        context = {'user':user,'school_list':school_list}
+        return render(request,'accounts/Pinteam/login.html',context)
+    else:
+        form = AuthenticationFormPinteam()
+        context = {'form':form}
+        return render(request,'accounts/Pinteam/index.html',context)
