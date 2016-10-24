@@ -85,11 +85,13 @@ def logout(request):
 
 def pinteam_index(request):
     if(request.user.is_authenticated()):
-        pass
-        # user = request.user
-        # print(user)
-        # context = { 'user':user }
-        # return render(request,'accounts/login.html',context)
+        user = request.user
+        schools = School.objects.all()
+        school_list = []
+        for i in schools:
+            school_list.append(i)
+        context = {'user':user,'school_list':school_list}
+        return render(request,'accounts/Pinteam/login.html',context)
     else:
         print("Pin index")
         form = AuthenticationFormPinteam()
