@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from accounts.views import index_page, login, check_work, logout, pinteam_index, login_pinteam
+from accounts.views import index_page, login, check_work, logout, pinteam_index, login_pinteam, info_school_admin
 
 urlpatterns = [
     url(r'^schooladmin/index/', index_page, name="index_page"),

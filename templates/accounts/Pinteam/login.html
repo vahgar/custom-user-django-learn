@@ -7,7 +7,7 @@
   <body>
     <p>Hey, {{ user.email }}</p>
     {% for i in school_list %}
-        <p>{{ i.school_name }}, {{ i.school_branch_area }}</p>
+        <p id="{{ i.school_id }}">{{ i.school_name }}, {{ i.school_branch_area }}</p>
     {% endfor %}
     <body>
 </html>

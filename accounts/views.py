@@ -13,6 +13,9 @@ from accounts.models import StudentUser, SchoolAdmin, Pinteam
 from School.models import School
 from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinteam
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
+from django.core import serializers
 
 
 # Create your views here.
@@ -137,3 +140,14 @@ def login_pinteam(request):
         form = AuthenticationFormPinteam()
         context = {'form':form}
         return render(request,'accounts/Pinteam/index.html',context)
+
+
+def info_school_admin(request, school_id):
+    school = School.objects.get(school_id=school_id)
+    SchoolAdmins = SchoolAdmin.objects.filter(school=school)
+    school_admin_list = []
+    for i in SchoolAdmins:
+        school_admin_list.append(i)
+    print(school_admin_list)
+    data = serializers.serialize('json', school_admin_list)
+    return HttpResponse(data, content_type='application/json')

@@ -114,7 +114,7 @@ class SchoolAdmin(BaseUSER):
     USERNAME_FIELD = 'email'
 
     def __str__(self):
-        x = self.school.school_name + " " + self.email
+        x = self.email
         return x
 
 class Pinteam(BaseUSER):
