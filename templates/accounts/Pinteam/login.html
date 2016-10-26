@@ -8,12 +8,30 @@
   <body>
     <p>Hey, {{ user.email }}</p>
     {% for i in school_list %}
-        <p id="school_name" class="{{ i.school_id }}">{{ i.school_name }}, {{ i.school_branch_area }}</p>
+        <p id="school" class="{{ i.school_id }}">{{ i.school_name }}, {{ i.school_branch_area }}</p>
+        <li id="list_of_admins"></li>
     {% endfor %}
     <body>
 
       <script>
 
+      $("#school").click(function(){
+        var myclass = $(this).attr("class");
+        var url = "http://127.0.0.1:8000/school/" + myclass;
+        alert("Yo");
+        $.ajax(url,{
+        dataType:"json",
+        success : function (response) {
+            var data = response
+            for(var i=0; i<data.length;i++)
+            {
+                console.log(data[0].email);
+            }
+            console.log(data)
+        }
+    })
+
+      })
 
 
       </script>
