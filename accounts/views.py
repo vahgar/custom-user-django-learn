@@ -147,7 +147,7 @@ def info_school_admin(request, school_id):
     SchoolAdmins = SchoolAdmin.objects.filter(school=school)
     school_admin_list = []
     for i in SchoolAdmins:
-        school_admin_list.append(i)
+        school_admin_list.append({'Name':i.first_name,'email':i.email,'school':i.school.school_name})
     print(school_admin_list)
-    data = serializers.serialize('json', school_admin_list)
+    data = json.dumps(school_admin_list,indent=4)
     return HttpResponse(data, content_type='application/json')
