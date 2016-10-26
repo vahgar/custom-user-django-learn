@@ -3,11 +3,18 @@
     <title>
       Login Page
     </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   </head>
   <body>
     <p>Hey, {{ user.email }}</p>
     {% for i in school_list %}
-        <p id="{{ i.school_id }}">{{ i.school_name }}, {{ i.school_branch_area }}</p>
+        <p id="school_name" class="{{ i.school_id }}">{{ i.school_name }}, {{ i.school_branch_area }}</p>
     {% endfor %}
     <body>
+
+      <script>
+
+
+
+      </script>
 </html>
