@@ -9,8 +9,9 @@
     <p>Hey, {{ user.email }}</p>
     {% for i in school_list %}
         <p id="school" class="{{ i.school_id }}">{{ i.school_name }}, {{ i.school_branch_area }}</p>
-        <li id="list_of_admins"></li>
+
     {% endfor %}
+    <li id="list_of_admins"></li>
     <body>
 
       <script>
@@ -25,9 +26,9 @@
             var data = response
             for(var i=0; i<data.length;i++)
             {
-                console.log(data[0].email);
+              $("#list_of_admins").append("<ul>"+data[i].email + " of " +data[i].school+"</ul>")
             }
-            console.log(data)
+
         }
     })
 
