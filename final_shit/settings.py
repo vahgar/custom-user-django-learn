@@ -25,7 +25,7 @@ SECRET_KEY = 'i@$#5bsadf7l$^lc!wp_s8_x7jux=u8#*qpo)8rl=rjrud=y!g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-AUTH_USER_MODEL = 'accounts.BaseUSER'
+AUTH_USER_MODEL = 'accounts.BaseUser'
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 
 
@@ -79,14 +79,15 @@ WSGI_APPLICATION = 'final_shit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'final_shit',
-        'HOST': 'localhost',
-        'USER': 'root',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'pinschool',
+        'USER': 'pinschool',
         'PASSWORD': '1470',
-        'PORT': 3306
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
+
 
 
 # Internationalization

@@ -9,7 +9,7 @@
 from django.shortcuts import render_to_response, redirect, render, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
-from accounts.models import StudentUser, SchoolAdmin, Pinteam
+from accounts.models import StudentUser, SchoolAdmin, BaseUser
 from School.models import School
 from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinteam
 from django.contrib.auth.decorators import login_required
