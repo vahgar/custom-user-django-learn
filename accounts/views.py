@@ -22,6 +22,14 @@ from django.core import serializers
 
 def index_page(request):
     if(request.user.is_authenticated()):
+        name = request.user.email
+        try:
+            check = SchoolAdmin.objects.get(email=name)
+        except SchoolAdmin.DoesNotExist:
+            django_logout(request)
+            form = AuthenticationForm()
+            context = {'form':form}
+            return render(request,'accounts/SchoolAdmin/index.html',context)
         user = request.user
         print(user)
         context = { 'user':user }
