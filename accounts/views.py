@@ -117,8 +117,8 @@ def login_pinteam(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             try:
-                check = Pinteam.objects.get(email=email)
-            except Pinteam.DoesNotExist:
+                check = BaseUser.objects.get(email=email)
+            except BaseUser.DoesNotExist:
                 return HttpResponse("User Does Not Exists")
             user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
