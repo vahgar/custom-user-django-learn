@@ -19,6 +19,7 @@ class SchoolAdminCreateAPIView(CreateAPIView):
     queryset = SchoolAdmin.objects.all()
     serializer_class = SchoolAdminCreateSerializer
 
+    permission_classes = [AllowAny]
 
 class UserListAPIView(ListAPIView):
     queryset = BaseUser.objects.all()
