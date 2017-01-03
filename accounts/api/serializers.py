@@ -38,4 +38,4 @@ class SchoolAdminCreateSerializer(serializers.ModelSerializer):
 class UserClass(serializers.ModelSerializer):
     class Meta:
         model = BaseUser
-        fields = ['first_name','last_name','email','is_staff']
+        fields = ['first_name','last_name','email','is_superuser']
