@@ -96,13 +96,21 @@ def logout(request):
 
 def pinteam_index(request):
     if(request.user.is_authenticated()):
-        user = request.user
-        schools = School.objects.all()
-        school_list = []
-        for i in schools:
-            school_list.append(i)
-        context = {'user':user,'school_list':school_list}
-        return render(request,'accounts/Pinteam/login.html',context)
+        name = request.user.email
+        try:
+            check = SchoolAdmin.objects.get(email=name)
+            django_logout(request)
+            form = AuthenticationForm()
+            context = {'form':form}
+            return render(request,'accounts/Pinteam/index.html',context)
+        except SchoolAdmin.DoesNotExist:
+            user = request.user
+            schools = School.objects.all()
+            school_list = []
+            for i in schools:
+                school_list.append(i)
+            context = {'user':user,'school_list':school_list}
+            return render(request,'accounts/Pinteam/login.html',context)
     else:
         print("Pin index")
         form = AuthenticationFormPinteam()
@@ -137,13 +145,21 @@ def login_pinteam(request):
         else:
             return HttpResponse("Form Not Valid")
     elif(request.user.is_authenticated()):
-        user = request.user
-        schools = School.objects.all()
-        school_list = []
-        for i in schools:
-            school_list.append(i)
-        context = {'user':user,'school_list':school_list}
-        return render(request,'accounts/Pinteam/login.html',context)
+        name = request.user.email
+        try:
+            check = SchoolAdmin.objects.get(email=name)
+            django_logout(request)
+            form = AuthenticationForm()
+            context = {'form':form}
+            return render(request,'accounts/Pinteam/index.html',context)
+        except SchoolAdmin.DoesNotExist:
+            user = request.user
+            schools = School.objects.all()
+            school_list = []
+            for i in schools:
+                school_list.append(i)
+            context = {'user':user,'school_list':school_list}
+            return render(request,'accounts/Pinteam/login.html',context)
     else:
         form = AuthenticationFormPinteam()
         context = {'form':form}
