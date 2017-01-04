@@ -11,7 +11,7 @@ from django.template import RequestContext
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from accounts.models import StudentUser, SchoolAdmin, BaseUser
 from School.models import School
-from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinteam
+from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinteam, AuthenticationFormStudent
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
@@ -165,7 +165,6 @@ def login_pinteam(request):
         context = {'form':form}
         return render(request,'accounts/Pinteam/index.html',context)
 
-
 def info_school_admin(request, school_id):
     school = School.objects.get(school_id=school_id)
     SchoolAdmins = SchoolAdmin.objects.filter(school=school)
@@ -175,3 +174,23 @@ def info_school_admin(request, school_id):
     print(school_admin_list)
     data = json.dumps(school_admin_list,indent=4)
     return HttpResponse(data, content_type='application/json')
+
+def student_index(request):
+    if(request.user.is_authenticated()):
+        name = request.user.student_id
+        try:
+            check = StudentUser.objects.get(student_id=name)
+        except StudentUser.DoesNotExist:
+            django_logout(request)
+            form = AuthenticationFormStudent()
+            context = {'form':form}
+            return render(request,'accounts/StudentUser/index.html',context)
+        user = request.user
+        print(user)
+        context = { 'user':user }
+        return render(request,'accounts/StudentUser/login.html',context)
+    else:
+        print("No")
+        form = AuthenticationFormStudentUser()
+        context = {'form':form}
+        return render(request,'accounts/StudentUser/index.html',context)

@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import SchoolAdmin
+from accounts.models import SchoolAdmin, StudentUser
 
 class RegistrationForm(forms.ModelForm):
     """
@@ -53,3 +53,12 @@ class AuthenticationFormPinteam(forms.Form):
 
     class Meta:
         fields = ['email', 'password']
+
+class AuthenticationFormStudent(forms.Form):
+
+    student_id = forms.CharField()
+    password = forms.CharField(widget = forms.PasswordInput)
+
+    class Meta:
+        model = StudentUser
+        fields = ['student_id','password']

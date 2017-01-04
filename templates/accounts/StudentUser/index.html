@@ -1,0 +1,14 @@
+<html>
+<head>
+  <title>Index Element</title>
+</head>
+<p>Student's Login</p>
+<form action="{% url 'student_login' %}" method='POST'>{% csrf_token %}
+{{ form.as_p }}
+<input type=submit value="Submit"/>
+</form>
+</html>
+
+<script>
+
+</script>
