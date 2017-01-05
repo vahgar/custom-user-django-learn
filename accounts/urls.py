@@ -13,7 +13,8 @@ urlpatterns = [
     url(r'^pinteam/login/', login_pinteam, name="pin_login"),
     url(r'^pinteam/create$', BaseUserCreateAPIView.as_view(), name='pin_create'),
     url(r'^list/$', UserListAPIView.as_view(), name='list_view'),
-    url(r'^studentuser/index/', student_index, name="student_user"),
+    url(r'^studentuser/index/', student_index, name="student_index"),
+
 
 
 

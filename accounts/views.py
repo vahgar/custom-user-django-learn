@@ -191,6 +191,6 @@ def student_index(request):
         return render(request,'accounts/StudentUser/login.html',context)
     else:
         print("No")
-        form = AuthenticationFormStudentUser()
+        form = AuthenticationFormStudent()
         context = {'form':form}
         return render(request,'accounts/StudentUser/index.html',context)
