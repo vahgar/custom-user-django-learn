@@ -89,7 +89,6 @@ class StudentUser(BaseUser):
     city = models.CharField(max_length=50,blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
     pincode = models.CharField(max_length=6,blank=True, null=True)
-    email_id =  models.EmailField(blank=True)
     phone_number = models.CharField(max_length=10, blank=True, null=True)
     mother_phone = models.CharField(max_length=10, blank=True, null=True)
     father_phone = models.CharField(max_length=10, blank=True, null=True)

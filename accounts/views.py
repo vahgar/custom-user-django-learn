@@ -93,7 +93,7 @@ def logout(request):
     django_logout(request)
     return redirect('index_page')
 
-
+''' Pin team Index & Login '''
 def pinteam_index(request):
     if(request.user.is_authenticated()):
         name = request.user.email
@@ -165,6 +165,8 @@ def login_pinteam(request):
         context = {'form':form}
         return render(request,'accounts/Pinteam/index.html',context)
 
+''' Pin team Ends '''
+
 def info_school_admin(request, school_id):
     school = School.objects.get(school_id=school_id)
     SchoolAdmins = SchoolAdmin.objects.filter(school=school)
@@ -176,6 +178,7 @@ def info_school_admin(request, school_id):
     return HttpResponse(data, content_type='application/json')
 
 def student_index(request):
+    print("At Student Index")
     if(request.user.is_authenticated()):
         name = request.user.student_id
         try:
@@ -190,7 +193,48 @@ def student_index(request):
         context = { 'user':user }
         return render(request,'accounts/StudentUser/login.html',context)
     else:
-        print("No")
+        form = AuthenticationFormStudent()
+        context = {'form':form}
+        return render(request,'accounts/StudentUser/index.html',context)
+
+def student_login(request):
+    if request.method == 'POST':
+        form = AuthenticationFormStudent(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['student_id']
+            try:
+                check = StudentUser.objects.get(student_id=name)
+            except StudentUser.DoesNotExist:
+                return HttpResponse("User Does Not Exists")
+            user = authenticate(username=form.cleaned_data['student_id'], password=form.cleaned_data['password'])
+            if user is not None:
+                if user.is_active:
+                    django_login(request, user)
+                    school = check.school
+                    q_set = StudentUser.objects.filter(school=school)
+                    q_set_list = []
+                    for i in q_set:
+                        q_set_list.append(i)
+                    context = { 'user':user,'q_set_list':q_set_list}
+                    return render(request,'accounts/StudentUser/login.html',context)
+                else:
+                    return HttpResponse("Not Active")
+            else:
+                return HttpResponse("Please Check Your Credentials")
+        else:
+            return HttpResponse("Form is not valid")
+    elif(request.user.is_authenticated()):
+        user = request.user
+        student_id = user.student_id
+        check = SchoolAdmin.objects.get(student_id=email)
+        school = check.school
+        q_set = StudentUser.objects.filter(school=school)
+        q_set_list = []
+        for i in q_set:
+            q_set_list.append(i)
+        context = { 'user':user,'q_set_list':q_set_list}
+        return render(request,'accounts/StudentUser/login.html',context)
+    else:
         form = AuthenticationFormStudent()
         context = {'form':form}
         return render(request,'accounts/StudentUser/index.html',context)
