@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from django.core import serializers
+from .backends import BackendForStudents
 
 
 # Create your views here.
@@ -200,6 +201,7 @@ def student_index(request):
 def student_login(request):
     if request.method == 'POST':
         form = AuthenticationFormStudent(request.POST)
+        print(form.errors)
         if form.is_valid():
             name = form.cleaned_data['student_id']
             try:
@@ -207,15 +209,19 @@ def student_login(request):
             except StudentUser.DoesNotExist:
                 return HttpResponse("User Does Not Exists")
             user = authenticate(username=form.cleaned_data['student_id'], password=form.cleaned_data['password'])
+            print(user)
+            request.user = user
+            print(request.user)
             if user is not None:
                 if user.is_active:
+
                     django_login(request, user)
-                    school = check.school
-                    q_set = StudentUser.objects.filter(school=school)
-                    q_set_list = []
-                    for i in q_set:
-                        q_set_list.append(i)
-                    context = { 'user':user,'q_set_list':q_set_list}
+                    # school = check.school
+                    # q_set = StudentUser.objects.filter(school=school)
+                    # q_set_list = []
+                    # for i in q_set:
+                    #     q_set_list.append(i)
+                    context = { 'user':user}
                     return render(request,'accounts/StudentUser/login.html',context)
                 else:
                     return HttpResponse("Not Active")

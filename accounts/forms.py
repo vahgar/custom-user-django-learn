@@ -58,7 +58,3 @@ class AuthenticationFormStudent(forms.Form):
 
     student_id = forms.CharField()
     password = forms.CharField(widget = forms.PasswordInput)
-
-    class Meta:
-        model = StudentUser
-        fields = ['student_id','password']
