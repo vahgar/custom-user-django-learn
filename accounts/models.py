@@ -27,6 +27,30 @@ class ManagerForUser(BaseUserManager):
         self.is_staff = False;
         return self._create_user(email, password, **extra_fields)
 
+class ManagerForUser2(BaseUserManager):
+
+    use_in_migrations = True
+
+    def _create_user(self, student_id, password, **extra_fields):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        if not student_id:
+            raise ValueError('The given student_id must be set')
+        student_id = self.student_id
+        user = self.model(student_id=student_id, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, student_id, password=None, **extra_fields):
+        extra_fields.setdefault('is_superuser', False)
+        self.is_staff = False;
+        return self._create_user(email, password, **extra_fields)
+
+
+
+
 class NewUserManager(BaseUserManager):
 
     use_in_migrations = True
@@ -96,7 +120,7 @@ class StudentUser(BaseUser):
     # bus_transport = models.ForeignKey(Bus,blank=True,null=True)
 
 
-    objects = ManagerForUser()
+    objects = ManagerForUser2()
 
     USERNAME_FIELD = 'student_id'
 
