@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.gis',
     'django.contrib.staticfiles',
+    'oauth2_provider',
+    'corsheaders',
     'rest_framework',
     'accounts',
     'School',
@@ -55,6 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 
 '''REST FRAMEWORK BEGIN'''

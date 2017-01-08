@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^school/(?P<school_id>\w+)/$',  'accounts.views.info_school_admin'),
 ]
