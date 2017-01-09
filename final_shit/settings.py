@@ -45,6 +45,17 @@ INSTALLED_APPS = (
     'accounts',
     'School',
 )
+''' Rest Frame work and oAuth '''
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
+
+''' Rest Framework & oAuth End '''
 
 
 
@@ -101,6 +112,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'final_shit.wsgi.application'
+
 
 
 # Database
