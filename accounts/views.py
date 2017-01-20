@@ -244,3 +244,18 @@ def student_login(request):
         form = AuthenticationFormStudent()
         context = {'form':form}
         return render(request,'accounts/StudentUser/index.html',context)
+
+def student_token_index(request):
+    if(request.user.is_authenticated()):
+        return HttpResponse("You need to Logout first")
+    else:
+        form = AuthenticationFormStudent()
+        context = {'form':form}
+        return render(request,'accounts/StudentUser/token_index.html',context)
+
+
+
+
+def createtoken_student(request):
+    if request.method == 'POST':
+        form = AuthenticationFormStudent(request.POST)
