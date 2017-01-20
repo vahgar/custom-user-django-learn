@@ -15,6 +15,7 @@ from .forms import AuthenticationForm, RegistrationForm, AuthenticationFormPinte
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
+from rest_framework.authtoken.models import Token
 from django.core import serializers
 from .backends import BackendForStudents
 
@@ -259,3 +260,14 @@ def student_token_index(request):
 def createtoken_student(request):
     if request.method == 'POST':
         form = AuthenticationFormStudent(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['student_id']
+            try:
+                check = StudentUser.objects.get(student_id=name)
+            except StudentUser.DoesNotExist:
+                return HttpResponse("User Does Not Exists")
+            user = authenticate(username=form.cleaned_data['student_id'], password=form.cleaned_data['password'])
+            if(user.is_authenticated()):
+                token = Token.objects.create(user=user)
+                print(token.key)
+                return HttpResponse(token.key)

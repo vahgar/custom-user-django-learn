@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from accounts.views import index_page, login, check_work, logout, pinteam_index, login_pinteam, info_school_admin, student_index, student_login, student_token_index
+from accounts.views import index_page, login, check_work, logout, pinteam_index, login_pinteam, info_school_admin, student_index, student_login, student_token_index, createtoken_student
 from accounts.api.api_views import BaseUserCreateAPIView, SchoolAdminCreateAPIView, UserListAPIView
 
 urlpatterns = [
@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^studentuser/index/', student_index, name="student_index"),
     url(r'^studentuser/login/', student_login, name="student_login"),
     url(r'^studentuser/token/', student_token_index, name="token"),
+    url(r'^studentuser/createtoken/', createtoken_student, name="createstudent_token"),
+
 
 
 
