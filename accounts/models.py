@@ -85,6 +85,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30 )
     last_name = models.CharField(max_length=50, blank=True)
     is_staff = models.BooleanField(default=True)
+    token_number = models.CharField(max_length=1024,blank=True,null=True,unique=True)
 
     objects = NewUserManager()
 

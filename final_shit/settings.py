@@ -39,25 +39,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.gis',
     'django.contrib.staticfiles',
-    'oauth2_provider',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'accounts',
     'School',
 )
 
 ''' Rest Frame work and oAuth '''
 
-OAUTH2_PROVIDER = {
-    # this is the list of available scopes
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 
     'DEFAULT_PERMISSION_CLASSES': (
