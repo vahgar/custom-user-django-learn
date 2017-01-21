@@ -268,6 +268,8 @@ def createtoken_student(request):
                 return HttpResponse("User Does Not Exists")
             user = authenticate(username=form.cleaned_data['student_id'], password=form.cleaned_data['password'])
             if(user.is_authenticated()):
-                token = Token.objects.create(user=user)
-                print(token.key)
-                return HttpResponse(token.key)
+                token = Token.objects.get_or_create(user=user)
+                print(token)
+                response_data = {'token': token}
+
+                return HttpResponse(json.dumps(token), content_type="application/json")
