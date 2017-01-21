@@ -267,11 +267,15 @@ def createtoken_student(request):
             except StudentUser.DoesNotExist:
                 return HttpResponse("User Does Not Exists")
             user = authenticate(username=form.cleaned_data['student_id'], password=form.cleaned_data['password'])
-            if(user.is_authenticated()):
+            if(user is not None):
                 token = Token.objects.get_or_create(user=user)
                 token = Token.objects.get(user=user)
                 response_data = {}
                 response_data['student_id'] = name
                 response_data['token'] = token.key
 
+                return HttpResponse(json.dumps(response_data), content_type="application/json")
+            else:
+                response_data = {}
+                response_data['message'] = "Incorrect Credentials! Please try again"
                 return HttpResponse(json.dumps(response_data), content_type="application/json")
