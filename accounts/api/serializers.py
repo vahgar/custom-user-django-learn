@@ -39,3 +39,8 @@ class UserClass(serializers.ModelSerializer):
     class Meta:
         model = BaseUser
         fields = ['first_name','last_name','email','is_superuser']
+
+class StudentUserClass(serializers.ModelSerializer):
+    class Meta:
+        model = StudentUser
+        fields = ['first_name','last_name','email','is_superuser','email','student_id']

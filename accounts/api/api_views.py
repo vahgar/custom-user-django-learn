@@ -6,8 +6,8 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticatedOrReadOnly,
 )
-from accounts.api.serializers import BaseUserCreateSerializer, SchoolAdminCreateSerializer, UserClass
-from accounts.models import BaseUser, SchoolAdmin
+from accounts.api.serializers import BaseUserCreateSerializer, SchoolAdminCreateSerializer, UserClass, StudentUserClass
+from accounts.models import BaseUser, SchoolAdmin, StudentUser
 
 class BaseUserCreateAPIView(CreateAPIView):
     queryset = BaseUser.objects.all()
@@ -23,3 +23,9 @@ class SchoolAdminCreateAPIView(CreateAPIView):
 class UserListAPIView(ListAPIView):
     queryset = BaseUser.objects.all()
     serializer_class = UserClass
+
+class StudentListAPIView(ListAPIView):
+    queryset = StudentUser.objects.all()
+    serializer_class = StudentUserClass
+
+    permission_classes = [AllowAny]
