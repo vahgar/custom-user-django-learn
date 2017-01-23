@@ -27,5 +27,3 @@ class UserListAPIView(ListAPIView):
 class StudentListAPIView(ListAPIView):
     queryset = StudentUser.objects.all()
     serializer_class = StudentUserClass
-
-    permission_classes = [AllowAny]

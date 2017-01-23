@@ -1,1 +1,2 @@
 curl -X GET http://127.0.0.1:8000/accounts/list/ -H 'Authorization: Token e7435f811dc03b0e59bd1ba7516be4c1fc939a3a'
+curl -X GET http://127.0.0.1:8000/accounts/studentuser/1234/ -H 'Authorization: Token e7435f811dc03b0e59bd1ba7516be4c1fc939a3a'
