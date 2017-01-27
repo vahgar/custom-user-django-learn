@@ -7,7 +7,7 @@ class BackendForStudents(ModelBackend):
     def authenticate(self, username=None, password=None):
         try:
             member = StudentUser.objects.get(student_id=username)
-        except SchoolAdmin.DoesNotExist:
+        except StudentUser.DoesNotExist:
             return None
 
         if member.check_password(password):

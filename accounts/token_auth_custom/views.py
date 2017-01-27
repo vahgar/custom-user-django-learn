@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.http import HttpResponse
@@ -15,7 +16,8 @@ class ObtainExpiringAuthToken(ObtainAuthToken):
             response_data = {}
             response_data['token'] = token.key
             return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-        return HttpResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        response_data = {}
+        response_data['detail'] = "Please Check Your Credentials"
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 obtain_expiring_auth_token = ObtainExpiringAuthToken.as_view()
