@@ -4,6 +4,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework.authtoken import views
 from accounts.views import index_page, login, check_work, logout, pinteam_index, login_pinteam, info_school_admin, student_index, student_login, student_token_index, createtoken_student
 from accounts.api.api_views import BaseUserCreateAPIView, SchoolAdminCreateAPIView, UserListAPIView, StudentListAPIView
+from accounts.token_auth_custom.views import obtain_expiring_auth_token
 
 urlpatterns = [
     url(r'^schooladmin/index/', index_page, name="index_page"),
@@ -20,8 +21,8 @@ urlpatterns = [
     url(r'^studentuser/token/', student_token_index, name="token"),
     # url(r'^studentuser/createtoken/', StudentCreateTokenAPIView.as_view(), name="createstudent_token"),
     url(r'^studentuser/(?P<student_id>[0-9]+)/$',StudentListAPIView.as_view(), name="detail_student"),
-    url(r'^api-token-auth/', views.obtain_auth_token),
-    
+    url(r'^api-token-auth/', obtain_expiring_auth_token),
+
 
 
 

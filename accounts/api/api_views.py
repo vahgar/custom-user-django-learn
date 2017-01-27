@@ -28,6 +28,7 @@ class UserListAPIView(ListAPIView):
     serializer_class = UserClass
     permission_classes = [AllowAny]
 
-class StudentListAPIView(ListAPIView):
+class StudentListAPIView(RetrieveAPIView):
     queryset = StudentUser.objects.all()
     serializer_class = StudentUserClass
+    lookup_field = 'student_id'
