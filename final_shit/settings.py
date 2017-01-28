@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'accounts',
     'School',
+    'channels',
 )
 
 ''' Rest Frame work and oAuth '''
