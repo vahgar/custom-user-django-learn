@@ -43,4 +43,4 @@ class UserClass(serializers.ModelSerializer):
 class StudentUserClass(serializers.ModelSerializer):
     class Meta:
         model = StudentUser
-        fields = ['first_name','last_name','email','is_superuser','email','student_id']
+        fields = ['first_name','last_name','email','is_superuser','student_id','address','city','state','pincode','phone_number','mother_phone','father_phone','standard']
