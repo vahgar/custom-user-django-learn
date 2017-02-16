@@ -5,7 +5,7 @@ class School(models.Model):
     school_id = models.CharField(primary_key=True,max_length=20)
     school_name = models.CharField(max_length=300,null=True,blank=True)
     school_branch_area = models.CharField(max_length=200,null=True,blank=True)
-    affiliation_number = models.CharField(max_length=100,null=True,blank=True)
+    affiliation_number = models.CharField(max_length=100,null=True,blank=True) 
     board = models.CharField(max_length=10,null=True,blank=True)
     address = models.CharField(max_length=1000,null=True,blank=True)
     North = 'North'
@@ -36,7 +36,7 @@ class School(models.Model):
     transport_incharge = models.CharField(max_length=50,null=True,blank=True)
     transport_incharge_number = models.CharField(max_length=10,null=True,blank=True)
     check_filed = models.CharField(blank=True,null=True,max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
 
     def __str__(self):
         return self.school_name +", "+ self.school_branch_area

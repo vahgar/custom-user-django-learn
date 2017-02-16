@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from phonenumber_field.modelfields import PhoneNumberField
+from School.models import School
 
 # Create your models here.
 class ManagerForUser(BaseUserManager):
@@ -85,7 +86,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30 )
     last_name = models.CharField(max_length=50, blank=True)
     is_staff = models.BooleanField(default=True)
-    
+
     objects = NewUserManager()
 
     USERNAME_FIELD = 'email'
@@ -108,7 +109,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
 class StudentUser(BaseUser):
 
     student_id = models.CharField(primary_key=True,max_length=10)
-    # school = models.ForeignKey(School,blank=True,null=True)
+    school = models.ForeignKey(School,blank=True,null=True)
     address = models.CharField(max_length=500, blank=True)
     city = models.CharField(max_length=50,blank=True, null=True)
     state = models.CharField(max_length=50, blank=True, null=True)
