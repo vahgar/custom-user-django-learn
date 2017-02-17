@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from School.models import School
+from accounts.models import StudentUser
 
 class SchoolCreateSerializer(serializers.ModelSerializer):
 
@@ -20,3 +21,13 @@ class SchoolCreateSerializer(serializers.ModelSerializer):
         'transport_incharge',
         'transport_incharge_number',
         ]
+
+class StudentUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentUser
+        fields = [
+        'student_id',
+        'school',
+        'email',
+        ]
+        depth = 2

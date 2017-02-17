@@ -7,7 +7,7 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticatedOrReadOnly,
 )
-from School.api.serializers import SchoolCreateSerializer
+from School.api.serializers import SchoolCreateSerializer, StudentUserSerializer
 from School.models import School
 from accounts.models import StudentUser
 
@@ -16,3 +16,14 @@ class SchoolCreateAPIView(CreateAPIView):
     serializer_class = SchoolCreateSerializer
 
     permission_classes = [IsAuthenticated]
+
+class SchoolStudentListAPIView(ListAPIView):
+    serializer_class = StudentUserSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        school = self.kwargs['school_id']
+        return StudentUser.objects.filter(school=school)

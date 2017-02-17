@@ -117,7 +117,33 @@ class StudentUser(BaseUser):
     phone_number = models.CharField(max_length=10, blank=True, null=True)
     mother_phone = models.CharField(max_length=10, blank=True, null=True)
     father_phone = models.CharField(max_length=10, blank=True, null=True)
-    standard = models.CharField(max_length=2,blank=True, null=True)
+    I = 'I'
+    II = 'II'
+    III = 'III'
+    IV = 'IV'
+    V = 'V'
+    VI = 'VI'
+    VII = "VII"
+    VIII = "VIII"
+    IX = "IX"
+    X = "X"
+    XI = "XI"
+    XII = "XII"
+    standard_choices = (
+        (I,'I'),
+        (II,'II'),
+        (III,'III'),
+        (IV,'IV'),
+        (V,'V'),
+        (VI,'VI'),
+        (VII,'VII'),
+        (VIII,'VIII'),
+        (IX,'IX'),
+        (X,'X'),
+        (X,'XI'),
+        (X,'XII'),
+    )
+    standard = models.CharField(max_length=15,choices=standard_choices,null=True,blank=True)
     # bus_transport = models.ForeignKey(Bus,blank=True,null=True)
 
 
