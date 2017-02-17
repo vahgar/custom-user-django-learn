@@ -7,6 +7,7 @@ from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticatedOrReadOnly,
 )
+from django.db.models import Q
 from School.api.serializers import SchoolCreateSerializer, StudentUserSerializer
 from School.models import School
 from accounts.models import StudentUser
@@ -27,3 +28,18 @@ class SchoolStudentListAPIView(ListAPIView):
         """
         school = self.kwargs['school_id']
         return StudentUser.objects.filter(school=school)
+
+
+class SchoolStudentClassListAPIView(ListAPIView):
+    serializer_class = StudentUserSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        school = self.kwargs['school_id']
+        standard = self.kwargs['standard']
+        f1 = Q(school=school)
+        f2 = Q(standard=standard)
+        return StudentUser.objects.filter(f1 & f2)
