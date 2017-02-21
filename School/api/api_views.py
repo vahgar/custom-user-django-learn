@@ -12,6 +12,12 @@ from School.api.serializers import SchoolCreateSerializer, StudentUserSerializer
 from School.models import School
 from accounts.models import StudentUser
 
+class SchoolListAPIView(ListAPIView):
+    queryset = School.objects.all()
+    serializer_class = SchoolCreateSerializer
+
+
+
 class SchoolCreateAPIView(CreateAPIView):
     queryset = School.objects.all()
     serializer_class = SchoolCreateSerializer
